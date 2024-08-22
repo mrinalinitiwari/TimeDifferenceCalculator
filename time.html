@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Difference Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007BFF;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .explanation {
+            text-align: left;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Time Difference Calculator</h1>
+        <form id="time-form">
+            <label for="start-time">Start Time:</label>
+            <input type="text" id="start-time" placeholder="MM/DD/YYYY hh:mm:ss AM/PM">
+
+            <label for="end-time">End Time:</label>
+            <input type="text" id="end-time" placeholder="MM/DD/YYYY hh:mm:ss AM/PM">
+
+            <button type="button" onclick="calculateTimeDifference()">Calculate</button>
+        </form>
+        <div id="result"></div>
+        <div id="explanation" class="explanation"></div>
+    </div>
+    <script>
+        function calculateTimeDifference() {
+            const startTimeInput = document.getElementById('start-time').value;
+            const endTimeInput = document.getElementById('end-time').value;
+
+            const startTime = new Date(startTimeInput);
+            const endTime = new Date(endTimeInput);
+
+            if (isNaN(startTime) || isNaN(endTime)) {
+                document.getElementById('result').innerText = 'Invalid date format. Please use MM/DD/YYYY hh:mm:ss AM/PM format.';
+                document.getElementById('explanation').innerText = '';
+                return;
+            }
+
+            const timeDifference = endTime - startTime;
+
+            if (timeDifference < 0) {
+                document.getElementById('result').innerText = 'End time must be after start time.';
+                document.getElementById('explanation').innerText = '';
+                return;
+            }
+
+            const seconds = Math.floor(timeDifference / 1000) % 60;
+            const minutes = Math.floor(timeDifference / (1000 * 60)) % 60;
+            const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+
+            document.getElementById('result').innerText = `Time Difference: ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+            document.getElementById('explanation').innerText = `Calculation steps:
+1. Start Time: ${startTime}
+2. End Time: ${endTime}
+3. Total Time Difference in milliseconds: ${timeDifference}
+4. Converted to seconds: ${Math.floor(timeDifference / 1000)}
+5. Extracted hours: ${hours}
+6. Extracted minutes: ${minutes}
+7. Extracted seconds: ${seconds}`;
+        }
+    </script>
+</body>
+</html>
